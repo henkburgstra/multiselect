@@ -1,2 +1,2 @@
 # multiselect
-Vue.js select component
+Javascript select component
