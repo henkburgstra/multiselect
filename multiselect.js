@@ -1,10 +1,15 @@
-var multiselect = function(id) {
+var multiselect = function(id, title, prompt) {
 	this.id = id;
+	this.title = title;
+	this.prompt = prompt;
 	this.options = {};
 	this.addOption = function(id, name) {
 		this.options[id] = {"name": name, "selected": false};	
 	};
 	this.select = function(id) {
+		if (id == "") {
+			return;
+		}
 		this.options[id].selected = !this.options[id].selected;
 		this.clear();
 		this.render();
@@ -26,6 +31,12 @@ var multiselect = function(id) {
 			container.id = this.id;
 			document.body.appendChild(container);
 		}
+		var d = document.createElement('div');
+		var s = document.createElement('strong');
+		var t = document.createTextNode(this.title);
+		d.appendChild(s);
+		s.appendChild(t);
+		container.appendChild(d);
 		var select = document.createElement('select');
 		for (var key in this.options) {
 			if (!this.options.hasOwnProperty(key)) {
@@ -52,12 +63,13 @@ var multiselect = function(id) {
 				select.appendChild(o);
 			}
 		}
-		select.addEventListener('click', function() {
+		select.addEventListener('change', function() {
 			self.select(select.options[select.selectedIndex].value);
 		});	
-		if (select.childNodes.length == 0) {
+		if (select.childNodes.length == 1) {
 			select.style.display = "none";
 		}
 		container.appendChild(select);
 	}
+	this.addOption("", this.prompt);
 }
