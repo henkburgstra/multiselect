@@ -38,12 +38,14 @@ var multiselect = function(id, title, prompt) {
 		s.appendChild(t);
 		container.appendChild(d);
 		var select = document.createElement('select');
+		select.className='form-control';
 		for (var key in this.options) {
 			if (!this.options.hasOwnProperty(key)) {
 				continue;
 			}
 			if (this.options[key].selected) {
-				// todo
+				var cd = document.createElement('div');
+				cd.className = 'checkbox';
 				var l = document.createElement('label');
 				l.style.display = "block";
 				var o = document.createElement('input');
@@ -55,7 +57,8 @@ var multiselect = function(id, title, prompt) {
 				});
 				l.appendChild(o);
 				l.appendChild(document.createTextNode(this.options[key].name));
-				container.appendChild(l);
+				cd.appendChild(l);
+				container.appendChild(cd);
 			} else {
 				var o = document.createElement('option');
 				o.value = key;
