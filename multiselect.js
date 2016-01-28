@@ -2,6 +2,7 @@ var multiselect = function(id, title, prompt) {
 	this.id = id;
 	this.title = title;
 	this.prompt = prompt;
+	this.changeHandlers = [];
 	this.options = {};
 	this.addOption = function(id, name) {
 		this.options[id] = {"name": name, "selected": false};	
@@ -13,6 +14,24 @@ var multiselect = function(id, title, prompt) {
 		this.options[id].selected = !this.options[id].selected;
 		this.clear();
 		this.render();
+		for (var i = 0; i < this.changeHandlers.length; i++) {
+			this.changeHandlers[i](this);
+		}
+	};
+	this.addChangeHandler = function(handler) {
+		this.changeHandlers.push(handler);
+	};
+	this.selected = function() {
+		var s = [];
+		for (var key in this.options) {
+			if (!this.options.hasOwnProperty(key)) {
+				continue;
+			}
+			if (this.options[key].selected) {
+				s.push({"id": key, "name": this.options[key].name});
+			}			
+		}
+		return s;
 	};
 	this.clear = function() {
 		var container = document.getElementById(this.id);
