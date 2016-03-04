@@ -3,8 +3,10 @@ var multiselect = function(id, title, prompt) {
 	this.title = title;
 	this.prompt = prompt;
 	this.changeHandlers = [];
+	this.keys = []
 	this.options = {};
 	this.addOption = function(id, name) {
+	    this.keys.push(id);
 		this.options[id] = {"name": name, "selected": false};	
 	};
 	this.select = function(id) {
@@ -23,12 +25,11 @@ var multiselect = function(id, title, prompt) {
 	};
 	this.selected = function() {
 		var s = [];
-		for (var key in this.options) {
-			if (!this.options.hasOwnProperty(key)) {
-				continue;
-			}
-			if (this.options[key].selected) {
-				s.push({"id": key, "name": this.options[key].name});
+		for (var i = 0; i < this.keys.length; i++) {
+		    var key = this.keys[i];
+		    var option = this.options[key];
+			if (option.selected) {
+				s.push({"id": key, "name": options.name});
 			}			
 		}
 		return s;
@@ -58,11 +59,10 @@ var multiselect = function(id, title, prompt) {
 		container.appendChild(d);
 		var select = document.createElement('select');
 		select.className='form-control';
-		for (var key in this.options) {
-			if (!this.options.hasOwnProperty(key)) {
-				continue;
-			}
-			if (this.options[key].selected) {
+		for (var i = 0; i < this.keys.length; i++) {
+		    var key = this.keys[i];
+		    var option = this.options[key];
+			if (option.selected) {
 				var cd = document.createElement('div');
 				cd.className = 'checkbox';
 				var l = document.createElement('label');
@@ -81,7 +81,7 @@ var multiselect = function(id, title, prompt) {
 			} else {
 				var o = document.createElement('option');
 				o.value = key;
-				o.appendChild(document.createTextNode(this.options[key].name));
+				o.appendChild(document.createTextNode(option.name));
 				select.appendChild(o);
 			}
 		}
