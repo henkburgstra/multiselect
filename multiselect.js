@@ -29,7 +29,7 @@ var multiselect = function(id, title, prompt) {
 		    var key = this.keys[i];
 		    var option = this.options[key];
 			if (option.selected) {
-				s.push({"id": key, "name": options.name});
+				s.push({"id": key, "name": option.name});
 			}			
 		}
 		return s;
