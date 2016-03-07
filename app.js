@@ -1,5 +1,5 @@
 var multiselects = {};
-var instrumenten = [];
+var instrumenten = null;
 
 var filter = function(instrument) {
     // filter op leeftijden
@@ -160,14 +160,82 @@ var filter = function(instrument) {
 	return true;
 };
 
-var renderList = function() {
-    var instrumenten = data.instrumenten.filter(filter);
-	for (var i = 0; i < instrumenten.length; i++) {
-	    console.log(instrumenten[i].naam)
-	}
+var InstrumentenLijst = function(id) {
+    this.id = id;
+
+    this.clear = function() {
+		var container = document.getElementById(this.id);
+		if (container == null) {
+			return;
+		}
+		while (container.hasChildNodes()) {
+			container.removeChild(container.lastChild);
+		}
+    };
+
+    this.circle = function(color, hint) {
+        var c = document.createElement('div');
+        c.style.backgroundColor = color;
+        c.setAttribute('popover', hint);
+        c.setAttribute('popover-trigger', 'mouseenter');
+        c.setAttribute('popover-placement', 'right');
+        return c;
+    }
+
+    this.render = function(data) {
+        this.clear();
+        var instrumenten = data.filter(filter);
+        var container = document.getElementById(this.id);
+
+        for (var i = 0; i < instrumenten.length; i++) {
+            var instrument = instrumenten[i];
+            var rij = document.createElement('div');
+            rij.className = 'instrumentrij';
+            /*
+                naam
+            */
+            var naam = document.createElement('div');
+            naam.className = 'naam';
+            rij.appendChild(naam);
+            var label = document.createElement('label');
+            naam.appendChild(label);
+            var checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            label.appendChild(checkbox);
+            if (instrument.cotan) {
+                label.appendChild(this.circle('green', 'COTAN-kwalificatie'));
+            }
+            if (instrument.lo) {
+                label.appendChild(this.circle('#c800ff', 'Logopedisch onderzoek'));
+            }
+            if (instrument.minimaal_pakket) {
+                label.appendChild(this.circle('#ff0000', 'Minimaal pakket'));
+            }
+            if (instrument.minimaal_pakket_t) {
+                label.appendChild(this.circle('00CCFF', 'Minimaal pakket meertaligen'));
+            }
+            if (instrument.aanvullend_pakket) {
+                label.appendChild(this.circle('eec535', 'Aanvullend pakket'));
+            }
+            if (instrument.aanvullend_pakket_t) {
+                label.appendChild(this.circle('CCFFFF', 'Aanvullend pakket meertaligen'));
+            }
+            label.appendChild(document.createTextNode(instrument.naam));
+            /*
+                meetpretentie
+            */
+            var meetpretentie = document.createElement('div');
+            meetpretentie.className = 'meetpretentie';
+            meetpretentie.appendChild(document.createTextNode(instrument.meetpretentie));
+            rij.appendChild(meetpretentie);
+
+            container.appendChild(rij);
+        }
+    };
 };
+
 var onSelectionChanged = function(sender) {
-	renderList();	
+	instrumenten.render(data.instrumenten);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -232,5 +300,8 @@ document.addEventListener('DOMContentLoaded', function() {
             multiselects[key].render();
       }
     }
+
+    instrumenten = new InstrumentenLijst('instrumenten');
+    instrumenten.render(data.instrumenten);
 
 });

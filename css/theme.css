@@ -206,7 +206,7 @@ body {
 .testwijzer {
 	max-width: 1200px;
 }
-check-selector {
+multi-select {
 	display: inline-block;
 	vertical-align: top;
 	margin: 3px 3px;
