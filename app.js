@@ -203,23 +203,30 @@ var InstrumentenLijst = function(id) {
             var checkbox = document.createElement('input');
             checkbox.setAttribute('type', 'checkbox');
             label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(' '));
             if (instrument.cotan) {
                 label.appendChild(this.circle('green', 'COTAN-kwalificatie'));
+                label.appendChild(document.createTextNode(' '));
             }
             if (instrument.lo) {
                 label.appendChild(this.circle('#c800ff', 'Logopedisch onderzoek'));
+                label.appendChild(document.createTextNode(' '));
             }
             if (instrument.minimaal_pakket) {
                 label.appendChild(this.circle('#ff0000', 'Minimaal pakket'));
+                label.appendChild(document.createTextNode(' '));
             }
             if (instrument.minimaal_pakket_t) {
                 label.appendChild(this.circle('#00CCFF', 'Minimaal pakket meertaligen'));
+                label.appendChild(document.createTextNode(' '));
             }
             if (instrument.aanvullend_pakket) {
                 label.appendChild(this.circle('#eec535', 'Aanvullend pakket'));
+                label.appendChild(document.createTextNode(' '));
             }
             if (instrument.aanvullend_pakket_t) {
                 label.appendChild(this.circle('#CCFFFF', 'Aanvullend pakket meertaligen'));
+                label.appendChild(document.createTextNode(' '));
             }
             label.appendChild(document.createTextNode(instrument.naam));
             /*
