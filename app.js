@@ -175,6 +175,7 @@ var InstrumentenLijst = function(id) {
 
     this.circle = function(color, hint) {
         var c = document.createElement('div');
+        c.className = 'circle';
         c.style.backgroundColor = color;
         c.setAttribute('popover', hint);
         c.setAttribute('popover-trigger', 'mouseenter');
@@ -212,13 +213,13 @@ var InstrumentenLijst = function(id) {
                 label.appendChild(this.circle('#ff0000', 'Minimaal pakket'));
             }
             if (instrument.minimaal_pakket_t) {
-                label.appendChild(this.circle('00CCFF', 'Minimaal pakket meertaligen'));
+                label.appendChild(this.circle('#00CCFF', 'Minimaal pakket meertaligen'));
             }
             if (instrument.aanvullend_pakket) {
-                label.appendChild(this.circle('eec535', 'Aanvullend pakket'));
+                label.appendChild(this.circle('#eec535', 'Aanvullend pakket'));
             }
             if (instrument.aanvullend_pakket_t) {
-                label.appendChild(this.circle('CCFFFF', 'Aanvullend pakket meertaligen'));
+                label.appendChild(this.circle('#CCFFFF', 'Aanvullend pakket meertaligen'));
             }
             label.appendChild(document.createTextNode(instrument.naam));
             /*
