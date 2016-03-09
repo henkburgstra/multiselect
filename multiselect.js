@@ -5,9 +5,12 @@ var multiselect = function(id, title, prompt) {
 	this.changeHandlers = [];
 	this.keys = []
 	this.options = {};
-	this.addOption = function(id, name) {
+	this.addOption = function(id, name, colour) {
 	    this.keys.push(id);
-		this.options[id] = {"name": name, "selected": false};	
+		if (colour == 'undefined') {
+			colour = '#fff';
+		}
+		this.options[id] = {"selected": false, "name": name, "colour": colour};	
 	};
 	this.select = function(id) {
 		if (id == "") {
